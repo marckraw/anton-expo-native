@@ -5,13 +5,16 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import {useEffect, useState} from "react";
-import {makeRequest} from "@/services";
+import { antonAPIRequest } from "@/services";
 
 export default function HomeScreen() {
-    const [result, setResult] = useState(null)
+    const [result, setResult] = useState<any>(null)
     useEffect(() => {
         (async () => {
-            const response = await makeRequest()
+            const response = await antonAPIRequest()
+            console.log("This is response", response)
+
+            setResult(response)
         })()
     }, [])
   return (
@@ -52,6 +55,11 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
           <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
+        </ThemedText>
+      </ThemedView>
+      <ThemedView>
+        <ThemedText>
+          {JSON.stringify(result, null, 2)}
         </ThemedText>
       </ThemedView>
     </ParallaxScrollView>
